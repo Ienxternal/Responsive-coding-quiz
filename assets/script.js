@@ -4,14 +4,55 @@ const result_box = document.querySelector(".result_box");
 const option_list = document.querySelector(".option_list");
 const timeText = document.querySelector(".timer .time_left_txt");
 const timeCount = document.querySelector(".timer .timer_sec");
+const restart = document.querySelector(".restart");
+const result_save = document.querySelector(".result_save");
+const save_box = document.querySelector(".save_box");
+const save_window = document.getElementById("#save_window");
+
 
 start_btn.onclick = ()=>{
     quiz_box.classList.add("activeQuiz"); //show quiz box
     console.log("Button clicked");
     showQuetions(0); //calling showQestions function
     startTimer(60); //calling startTimer function
+    delay = 0;
 }
 
+restart.onclick = ()=>{
+    result_box.classList.remove("activeResult"); 
+}
+
+result_save.onclick = ()=>{
+    result_box.classList.remove("activeResult"); 
+    save_box.classList.add("activeSave");
+    let delay = 0
+    const scoreText_rtn = document.querySelector(".score_text_rtn");
+    scoreText_rtn.innerHTML = timeresult;
+    window.onclick = function(event) {
+        if (!event.target.closest("#save_window") && delay > 0) { 
+         console.log("outside of window");
+         console.log(delay);
+        save_box.classList.remove("activeSave");
+        }else { 
+            console.log("inside window"); 
+            console.log(delay);
+            delay = delay+1; 
+
+    } 
+}
+}
+
+const username =document.getElementById('username');
+username.addEventListener('keyup', () => {
+    console.log(username.value);
+});
+saveHighScore = (event) => {
+    console.log("save highscore");
+    event.preventDefault();
+}
+
+
+let delay = 0;
 let timeresult = 20;
 let que_count = 0;
 let que_numb = 1;
@@ -29,105 +70,6 @@ let questions = [
       "Hyper Textile Marking Language",
       "Horizontal Markup Language",
       "Hyper Text Markup Language"
-    ]
-  },
-    {
-    numb: 2,
-    question: "What is a common list type in HTML",
-    answer: "Unordered List",
-    options: [
-      "Unordered List",
-      "Grocery List",
-      "Computer Part List",
-      "Bucket List"
-    ]
-  },
-    {
-    numb: 3,
-    question: "What does CSS stand for?",
-    answer: "Cascading Style Sheets",
-    options: [
-      "Compass Sheeting Style",
-      "Cascade Standard Styles",
-      "Cascading Style Sheets",
-      "Creating Style Sheets"
-    ]
-  },
-    {
-    numb: 4,
-    question: "What is the standard end file extension for JavaScript?",
-    answer: ".js",
-    options: [
-      ".jjs",
-      ".jsx",
-      ".js",
-      ".java"
-    ]
-  },
-    {
-    numb: 5,
-    question: "What does SQL stand for?",
-    answer: "Structured Query Language",
-    options: [
-      "Structured Query Language",
-      "Sequenced Quality Language",
-      "Semantic Quality Language",
-      "Squared Quality Language"
-    ]
-  },
-    {
-    numb: 6,
-    question: "What does API stand for?",
-    answer: "Application Programming Interface",
-    options: [
-      "Approximate Present Information",
-      "Application Property Information",
-      "Artificial Proponent Indicator",
-      "Application Programming Interface"
-    ]
-  },
-    {
-    numb: 7,
-    question: "What does DOM stand for?",
-    answer: "Document Object Model",
-    options: [
-      "Document Object Model",
-      "Detailed Operations Model",
-      "Directed Object Model",
-      "Dominant Object Model"
-    ]
-  },
-     {
-    numb: 8,
-    question: "What does CDN stand for?",
-    answer: "Content Delivery Network",
-    options: [
-      "Canadian Distribution Network",
-      "Content Delivery Network",
-      "Common Delivery Node",
-      "Creative Delivery Network",
-    ]
-  },
-    {
-    numb: 9,
-    question: "What does SEO stand for?",
-    answer: "Search Engine Optimization",
-    options: [
-      "Standard Entity Optimization",
-      "Search Entity Optimization",
-      "Saved Engine Optimization",
-      "Search Engine Optimization",
-    ]
-  },
-  {
-    numb: 10,
-    question: "What does UX stand for?",
-    answer: "User Experience",
-    options: [
-      "User Experience",
-      "University Crossing",
-      "Untitled Extreme",
-      "Upset of Experience",
     ]
   },
 ];
@@ -194,24 +136,15 @@ function optionSelected(answer){
 function showResult(){
     result_box.classList.add("activeResult"); //show result box
     quiz_box.classList.remove("activeQuiz"); 
-    const scoreText = result_box.querySelector(".score_text");
+    const scoreText = document.querySelector(".score_text");
     clearInterval(counter);
     console.log(timeresult);
-    if (userScore > 3){ // if user scored more than 3
-        //creating a new span tag and passing the user score number and total question number
-        let scoreTag = '<span>Your Score is ' + timeresult +'</span>';
-        scoreText.innerHTML = scoreTag;  //adding new span tag inside score_Text
-    }
-    else if(userScore > 1){ // if user scored more than 1
-        let scoreTag = '<span>Your Score is ' + timeresult +'</span>';
-        scoreText.innerHTML = scoreTag;
-    }
-    else if(timeans == 0){ // if user scored more than 1
+    if(timeans == 0){ // if user scored more than 1
         let scoreTag = '<span> Time Ran out :( you got a 0.</span>';
         scoreText.innerHTML = scoreTag;
     }
     else{ // if user scored less than 1
-        let scoreTag = '<span>Your Score is ' + timeresult +'</span>';
+        let scoreTag = '<span>Your Score is ' + timeresult +'!</span>';
         scoreText.innerHTML = scoreTag;
     
     }
