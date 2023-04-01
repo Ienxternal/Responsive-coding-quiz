@@ -8,24 +8,31 @@ const restart = document.querySelector(".restart");
 const result_save = document.querySelector(".result_save");
 const save_box = document.querySelector(".save_box");
 const save_window = document.getElementById("#save_window");
-
+const timer_init = 59;
 
 start_btn.onclick = ()=>{
     quiz_box.classList.add("activeQuiz"); //show quiz box
     console.log("Button clicked");
     showQuetions(0); //calling showQestions function
-    startTimer(60); //calling startTimer function
+    startTimer(timer_init); //calling startTimer function
     delay = 0;
 }
 
 restart.onclick = ()=>{
+    que_count = 0;
+    que_numb = 1;
+    userScore = 0;
+    timeans = 1;
+    timewrong = 0;
+    clearInterval(counter);
     result_box.classList.remove("activeResult"); 
+    
 }
 
 result_save.onclick = ()=>{
     result_box.classList.remove("activeResult"); 
     save_box.classList.add("activeSave");
-    let delay = 0
+    let delay = 0 //Add delay to prevent window from closing prematurely
     const scoreText_rtn = document.querySelector(".score_text_rtn");
     scoreText_rtn.innerHTML = timeresult;
     window.onclick = function(event) {
@@ -36,22 +43,37 @@ result_save.onclick = ()=>{
         }else { 
             console.log("inside window"); 
             console.log(delay);
-            delay = delay+1; 
+            delay =+ 1; 
 
     } 
 }
 }
 
 const username =document.getElementById('username');
+const save_score_btn = document.getElementById('save_score_btn');
+const highScores = JSON.parse(localStorage.getItem('highScores')) || [];
+const max_retain = 3;
+console.log(highScores);
+
 username.addEventListener('keyup', () => {
     console.log(username.value);
+    save_score_btn.disabled = !username.value;
 });
 saveHighScore = (event) => {
-    console.log("save highscore");
     event.preventDefault();
-}
+    const score = {
+       score: Math.floor(Math.random() *100),
+        name: username.value
+    };
+    highScores.push(score);
+    highScores.sort( (a,b) => b.score - a.score);
+    highScores.splice(max_retain);
+    localStorage.setItem('highScores', JSON.stringify(highScores));
+    console.log(highScores);
+    save_box.classList.remove("activeSave");
+} 
 
-
+let time = 0;
 let delay = 0;
 let timeresult = 20;
 let que_count = 0;
@@ -59,19 +81,20 @@ let que_numb = 1;
 let userScore = 0;
 let widthValue = 0;
 let timewrong = 0
-let timeans = 10;
+let timeans = 1;
 let questions = [
     {
     numb: 1,
-    question: "What is the abbreviation HTML?",
+    question: "What does HTML stand for?",
     answer: "Hyper Text Markup Language",
     options: [
-      "Hypothesis Themed Markup Language",
-      "Hyper Textile Marking Language",
-      "Horizontal Markup Language",
-      "Hyper Text Markup Language"
+      "Hyper Text Preprocessor",
+      "Hyper Text Markup Language",
+      "Hyper Text Multiple Language",
+      "Hyper Tool Multi Language"
     ]
   },
+    
 ];
 
 const next_btn = document.querySelector("footer .next_btn");
@@ -119,7 +142,7 @@ function optionSelected(answer){
         console.log("Your correct answers = " + userScore);
     }else{
         answer.classList.add("incorrect"); //adding red color to correct selected option
-        timewrong = 1;
+        timewrong = 1; //starts function to minus 10 seconds
         for(i=0; i < allOptions; i++){
             if(option_list.children[i].textContent == correcAns){ //if there is an option which is matched to an array answer 
                 option_list.children[i].setAttribute("class", "option correct"); //adding green color to matched option
@@ -137,15 +160,22 @@ function showResult(){
     result_box.classList.add("activeResult"); //show result box
     quiz_box.classList.remove("activeQuiz"); 
     const scoreText = document.querySelector(".score_text");
+    console.log('time recorded before' +timeresult);
+    localStorage.setItem("recentScore", timeresult);
+    console.log(timeresult);
     clearInterval(counter);
     console.log(timeresult);
+    timeCount.textContent = 60;
+   
     if(timeans == 0){ // if user scored more than 1
         let scoreTag = '<span> Time Ran out :( you got a 0.</span>';
         scoreText.innerHTML = scoreTag;
+       
     }
     else{ // if user scored less than 1
         let scoreTag = '<span>Your Score is ' + timeresult +'!</span>';
         scoreText.innerHTML = scoreTag;
+    
     
     }
 }
@@ -155,10 +185,12 @@ function startTimer(time){
     function timer(){
         timeCount.textContent = time; //changing the value of timeCount with time value
         time--; //decrement the time value
-        console.log(timeans);
+        console.log("time " + timeans);
+        console.log(time);
         timeresult = time;
-        if(time < 0){ //if timer is less than 0
+        if(time <= 0){ //if timer is less than 0
             clearInterval(counter); //clear counter
+            timeresult = 0;
             timeText.textContent = "End Time"; //change the time text to time off
             const allOptions = option_list.children.length; //getting all option items
             let correcAns = questions[que_count].answer; //getting correct answer from array
@@ -166,8 +198,9 @@ function startTimer(time){
                 if(option_list.children[i].textContent == correcAns){ //if there is an option which is matched to an array answer
                     option_list.children[i].setAttribute("class", "option correct"); //adding green color to matched option
                     console.log("Time Off: Auto selected correct answer.");
-                    timeans = 0
+                    timeans = 0 //declares if counter goes to zero
                     showResult();
+                    timeCount.textContent = timer_init;
                 }
             }
             for(i=0; i < allOptions; i++){
@@ -175,12 +208,13 @@ function startTimer(time){
             }
             next_btn.classList.add("show"); //show the next button if user selected any option
         }
+        // if time was marked wrong time would get minus 10.
         if(timewrong == 1){
             if(time <= 10){
                 time = 0;
             }
             else{
-            time = time-10;
+            time -= 10;
             timewrong = 0
             timeCount.textContent = time; 
             }

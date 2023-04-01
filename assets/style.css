@@ -1,7 +1,6 @@
 
 ::selection{
     color: #fff;
-    background: #007bff;
 }
 
 .start_btn,
@@ -90,7 +89,6 @@
 
 .info_box .info-list .info span{
     font-weight: 600;
-    color: #007bff;
 }
 .info_box .buttons{
     height: 60px;
@@ -101,19 +99,7 @@
     border-top: 1px solid lightgrey;
 }
 
-/* .info_box .buttons button{
-    margin: 0 5px;
-    height: 40px;
-    width: 100px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    border: none;
-    outline: none;
-    border-radius: 5px;
-    border: 1px solid #007bff;
-    transition: all 0.3s ease;
-} */
+
 
 .quiz_box{
     width: 550px;
@@ -173,8 +159,7 @@
     bottom: 0px;
     left: 0px;
     height: 3px;
-    background: #007bff;
-}
+} 
 
 section{
     padding: 25px 30px 20px 30px;
@@ -218,7 +203,6 @@ section .option_list .option:hover{
 section .option_list .option.correct{
     color: #155724;
     background: #d4edda;
-  
 }
 
 section .option_list .option.incorrect{
