@@ -6,61 +6,58 @@
     <title>Coding Quiz</title>
     <link rel="stylesheet" href="./assets/style.css"> 
 </head>
+
 <body>
-    <div class="start_btn"><button id="start_quiz">Start Quiz</button></div>
-    <div class="high_btn"><button id="high_score">High Scores</button></div>
-    <div class="quiz_box">
+    <!-- Create button for Start and High Scores on front page -->
+    <button id="start_quiz" class="start_btn">Start Quiz</button>
+    <button id="high_score" class="high_btn">High Scores</button>
+    <section class="quiz_box">
         <header>
-            <div class="title">Coding Quiz!</div>
-            <div class="timer">
-                <div class="time_left_txt">Time Left</div>
-                <div class="timer_sec">60</div>
-            </div>
-            <div class="time_line"></div>
+            <h2 class="title">Coding Quiz!</h2>
+            <aside class="timer">
+                <h3 class="time_left_txt">Time Left</h3>
+                <h3 class="timer_sec">60</h3>
+            </aside>
         </header>
+        <!-- Creates question and option lists -->
         <section>
-            <div class="que_text">
-            </div>
-            <div class="option_list">
-            </div>
+            <span class="que_text">
+            </span>
+            <span class="option_list">
+            </span>
         </section>
-
         <footer>
-            <div class="total_que">
-            </div>
-            <button class="next_btn">Next Que</button>
+            <button class="next_btn">Next</button>
         </footer>
-    </div>
-
-    <div class="result_box">
-        <div class="complete_text">Quiz Ended!</div>
-        <div class="score_text">
-        </div>
-        <div class="buttons">
+    </section>
+    <!-- Result box normally with 0 opacity -->
+    <section class="result_box">
+        <h3 class="complete_text">Quiz Ended!</h3>
+        <h3 class="score_text"></h3>
+        <aside class="buttons">
             <button class="result_save">Save Score</button>
             <button class="restart">Restart</button>
-        </div>
-    </div>
-<section id="save_window" class="save_box">
-    <p class="your_score">Your Score is:</p>
-    <div class="score_text_rtn"></div>
-    <form>
-        <input type="text" name="username" placeholder="username" id="username"/>
-        <button type="submit" class="save_score" id="save_score_btn" onclick="saveHighScore(event)" disabled>Save Score</button>
-    </form>
-</section>
-
-<section id="highscore_window" class="highscore_box">
-    <h1 class="highscores">High Scores</h1>
-    <ul id="highscore_list">No Scores Present.</ul>
-    <div class="hs_buttons">
-    <button class="return">Return</button>
-    <button class="clear_highscore">Clear Scores</button>
-    </div>
-</section>
+        </aside>
+    </section>
+    <!-- Save window to allow users to save name and score -->
+    <section id="save_window" class="save_box">
+        <p class="your_score">Your Score is:</p>
+        <h3 class="score_text_rtn"></h3>
+        <form>
+            <input type="text" name="username" placeholder="username" id="username"/>
+            <button type="submit" class="save_score" id="save_score_btn" onclick="saveHighScore(event)" disabled>Save Score</button>
+        </form>
+    </section>
+    <!-- Highscore window that displays top highest scores -->
+    <section id="highscore_window" class="highscore_box">
+        <h1 class="highscores">High Scores</h1>
+        <ul id="highscore_list">No Scores Present.</ul>
+        <aside class="hs_buttons">
+        <button class="return">Return</button>
+        <button class="clear_highscore">Clear Scores</button>
+        </aside>
+    </section>
 
     <script src="assets/script.js"></script>
-
 </body>
-</html>
 </html>
