@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="start_btn"><button id="start_quiz">Start Quiz</button></div>
-    <aside class="high_btn"><button id="high_score">High Scores</button></aside>
+    <div class="high_btn"><button id="high_score">High Scores</button></div>
     <div class="quiz_box">
         <header>
             <div class="title">Coding Quiz!</div>
@@ -48,8 +48,17 @@
         <input type="text" name="username" placeholder="username" id="username"/>
         <button type="submit" class="save_score" id="save_score_btn" onclick="saveHighScore(event)" disabled>Save Score</button>
     </form>
-
 </section>
+
+<section id="highscore_window" class="highscore_box">
+    <h1 class="highscores">High Scores</h1>
+    <ul id="highscore_list">No Scores Present.</ul>
+    <div class="hs_buttons">
+    <button class="return">Return</button>
+    <button class="clear_highscore">Clear Scores</button>
+    </div>
+</section>
+
     <script src="assets/script.js"></script>
 
 </body>
