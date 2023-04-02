@@ -7,7 +7,8 @@
 .info_box,
 .quiz_box,
 .result_box,
-.save_box{
+.save_box,
+.highscore_box{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -26,13 +27,23 @@
 .info_box.activeInfo,
 .quiz_box.activeQuiz,
 .result_box.activeResult,
-.save_box.activeSave{
+.save_box.activeSave,
+.highscore_box.activeScore{
     opacity: 1;
     z-index: 5;
     pointer-events: auto;
     transform: translate(-50%, -50%) scale(1);
 }
+#highscore_list{
+    list-style: none;
+}
+h1{
+    margin-bottom: 0px;
+}
 
+.highscore_box ul{
+    padding-left: 0px;
+}
 .start_btn button{
     font-size: 25px;
     font-weight: 500;
@@ -98,8 +109,6 @@
     padding: 0 30px;
     border-top: 1px solid lightgrey;
 }
-
-
 
 .quiz_box{
     width: 550px;
@@ -289,22 +298,7 @@ footer button.show{
     transform: scale(1);
 }
 
-.result_box{
-    background: #fff;
-    border-radius: 5px;
-    display: flex;
-    padding: 25px 30px;
-    width: 450px;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    transform: translate(-50%, -50%) scale(0.9);
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.3s ease;
-}
-
-.save_box{
+.result_box, .save_box, .highscore_box{
     background: #fff;
     border-radius: 5px;
     display: flex;
@@ -329,7 +323,7 @@ footer button.show{
     font-size: 20px;
     font-weight: 500;
 }
-button.save_score{
+.save_score, .return, .clear_highscore{
     background:white;
     margin: 0 10px;
     height: 45px;
@@ -345,7 +339,7 @@ button.save_score{
     
 }
 
-button.save_score:hover{
+.save_score:hover, .return:hover, .clear_highscore:hover{
     color: #fff;
     background:#5d00ff;
 }
@@ -379,12 +373,12 @@ button.save_score:hover{
     font-weight: 600;
 }
 
-.result_box .buttons{
+.result_box .buttons,.highscore_box .hs_buttons{
     display: flex;
     margin: 20px 0;
 }
 
-.result_box .buttons button{
+.result_box .buttons button, .highscore_box .hs_buttons button{
     margin: 0 10px;
     height: 45px;
     padding: 0 20px;
@@ -398,20 +392,11 @@ button.save_score:hover{
     transition: all 0.3s ease;
 }
 
-.buttons button.result_save{
+.restart, .result_save, .return, .clear_highscore{
     background:white;
 }
 
-.buttons button.result_save:hover{
-    color: white;
-    background:#5d00ff;
-}
-
-.buttons button.restart{
-    background:white;
-}
-
-.buttons button.restart:hover{
+.restart:hover, .result_save:hover, .return:hover, .clear_highscore:hover{
     color: #fff;
     background:#5d00ff;
 }

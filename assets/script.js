@@ -8,7 +8,17 @@ const restart = document.querySelector(".restart");
 const result_save = document.querySelector(".result_save");
 const save_box = document.querySelector(".save_box");
 const save_window = document.getElementById("#save_window");
+const return_highscore = document.querySelector(".return");
+const highscore_box = document.querySelector(".highscore_box");
+const highscore_btn = document.querySelector("#high_score");
 const timer_init = 59;
+const username =document.getElementById('username');
+const save_score_btn = document.getElementById('save_score_btn');
+const highScores = JSON.parse(localStorage.getItem('highScores')) || [];
+const clear_score = document.querySelector(".clear_highscore");
+const highscore_list = document.getElementById("highscore_list");
+const max_retain = 10;
+console.log(highScores);
 
 start_btn.onclick = ()=>{
     quiz_box.classList.add("activeQuiz"); //show quiz box
@@ -18,7 +28,44 @@ start_btn.onclick = ()=>{
     delay = 0;
 }
 
+clear_score.onclick =() =>{
+    console.log("Button clicked");
+    console.log(highScores);
+    highscore_list.innerHTML = "";   
+    localStorage.clear();
+    highScores.length = 0;
+    return;
+}
+
+highscore_btn.onclick = ()=>{
+    console.log("Button clicked");
+    highscore_box.classList.add("activeScore");
+    let delay = 0
+    highscore_list.innerHTML = highScores.map (score => {
+        return `<li class="high-score">${score.name}-${score.score}</li>`;
+})
+.join("");
+
+    
+return_highscore.onclick = ()=>{
+    highscore_box.classList.remove("activeScore");
+}
+    window.onclick = function(event) {
+        if (!event.target.closest("#highscore_window") && delay > 0) { 
+         console.log("outside of window");
+         console.log(delay);
+         highscore_box.classList.remove("activeScore");
+        }else { 
+            console.log("inside window"); 
+            console.log(delay);
+            delay =+ 1; 
+    } 
+}
+}
+
+
 restart.onclick = ()=>{
+    console.log("Button clicked");
     que_count = 0;
     que_numb = 1;
     userScore = 0;
@@ -32,6 +79,7 @@ restart.onclick = ()=>{
 result_save.onclick = ()=>{
     result_box.classList.remove("activeResult"); 
     save_box.classList.add("activeSave");
+    restart_check = 0;
     let delay = 0 //Add delay to prevent window from closing prematurely
     const scoreText_rtn = document.querySelector(".score_text_rtn");
     scoreText_rtn.innerHTML = timeresult;
@@ -44,16 +92,11 @@ result_save.onclick = ()=>{
             console.log("inside window"); 
             console.log(delay);
             delay =+ 1; 
-
     } 
 }
 }
 
-const username =document.getElementById('username');
-const save_score_btn = document.getElementById('save_score_btn');
-const highScores = JSON.parse(localStorage.getItem('highScores')) || [];
-const max_retain = 3;
-console.log(highScores);
+
 
 username.addEventListener('keyup', () => {
     console.log(username.value);
@@ -61,8 +104,14 @@ username.addEventListener('keyup', () => {
 });
 saveHighScore = (event) => {
     event.preventDefault();
+    que_count = 0;
+    que_numb = 1;
+    userScore = 0;
+    timeans = 1;
+    timewrong = 0;
+    clearInterval(counter);
     const score = {
-       score: Math.floor(Math.random() *100),
+       score: timeresult,
         name: username.value
     };
     highScores.push(score);
@@ -84,16 +133,115 @@ let timewrong = 0
 let timeans = 1;
 let questions = [
     {
-    numb: 1,
-    question: "What does HTML stand for?",
-    answer: "Hyper Text Markup Language",
+        numb: 1,
+        question: "What does CDN stand for?",
+        answer: "Content Delivery Network",
+        options: [
+        "Canadian Distribution Network",
+        "Content Delivery Network",
+        "Common Delivery Node",
+        "Creative Delivery Network"
+        ]
+    },
+    {
+        numb: 2,
+        question: "What is a common list type in HTML",
+        answer: "Unordered List",
+        options: [
+        "Unordered List",
+        "Grocery List",
+        "Computer Part List",
+        "Bucket List"
+        ]
+    },
+    {
+    numb: 3,
+    question: "What does CSS stand for?",
+    answer: "Cascading Style Sheets",
     options: [
-      "Hyper Text Preprocessor",
-      "Hyper Text Markup Language",
-      "Hyper Text Multiple Language",
-      "Hyper Tool Multi Language"
+      "Compass Sheeting Style",
+      "Cascade Standard Styles",
+      "Cascading Style Sheets",
+      "Creating Style Sheets"
     ]
   },
+    {
+    numb: 4,
+    question: "What is the standard end file extension for JavaScript?",
+    answer: ".js",
+    options: [
+      ".jjs",
+      ".jsx",
+      ".js",
+      ".java"
+    ]
+  },
+    {
+    numb: 5,
+    question: "What does SQL stand for?",
+    answer: "Structured Query Language",
+    options: [
+      "Structured Query Language",
+      "Sequenced Quality Language",
+      "Semantic Quality Language",
+      "Squared Quality Language"
+    ]
+  },
+    {
+    numb: 6,
+    question: "What does API stand for?",
+    answer: "Application Programming Interface",
+    options: [
+      "Approximate Present Information",
+      "Application Property Information",
+      "Artificial Proponent Indicator",
+      "Application Programming Interface"
+    ]
+  },
+    {
+    numb: 7,
+    question: "What does DOM stand for?",
+    answer: "Document Object Model",
+    options: [
+      "Document Object Model",
+      "Detailed Operations Model",
+      "Directed Object Model",
+      "Dominant Object Model"
+    ]
+  },
+     {
+    numb: 8,
+    question: "The abbreviation HTML stands for?",
+    answer: "Hyper Text Markup Language",
+    options: [
+      "Hypothesis Transfer Markup Language",
+      "Hyper Text Markup Language",
+      "Haptic Text Markup Language",
+      "Hyper Technical Material Language",
+    ]
+  },
+    {
+    numb: 9,
+    question: "What does SEO stand for?",
+    answer: "Search Engine Optimization",
+    options: [
+      "Standard Entity Optimization",
+      "Search Entity Optimization",
+      "Saved Engine Optimization",
+      "Search Engine Optimization"
+    ]
+  },
+  {
+    numb: 10,
+    question: "What does UX stand for?",
+    answer: "User Experience",
+    options: [
+      "User Experience",
+      "University Crossing",
+      "Untitled Extreme",
+      "Upset of Experience"
+    ]
+  }
     
 ];
 
@@ -160,11 +308,8 @@ function showResult(){
     result_box.classList.add("activeResult"); //show result box
     quiz_box.classList.remove("activeQuiz"); 
     const scoreText = document.querySelector(".score_text");
-    console.log('time recorded before' +timeresult);
     localStorage.setItem("recentScore", timeresult);
-    console.log(timeresult);
     clearInterval(counter);
-    console.log(timeresult);
     timeCount.textContent = 60;
    
     if(timeans == 0){ // if user scored more than 1
@@ -185,7 +330,6 @@ function startTimer(time){
     function timer(){
         timeCount.textContent = time; //changing the value of timeCount with time value
         time--; //decrement the time value
-        console.log("time " + timeans);
         console.log(time);
         timeresult = time;
         if(time <= 0){ //if timer is less than 0
