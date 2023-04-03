@@ -14,6 +14,9 @@
 <h3>Project Summary</h3>
 Create a responsive code quiz. Code quiz includes highscore saving from localstorage as well as clearing.
 
+<h3>Resources</h3>
+Coding Nepal,
+James Q Quick
 
 <h5>Reposition Location can be found here.</h5>
 
